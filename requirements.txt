@@ -2,3 +2,4 @@ opencv-python
 opencv-contrib-python
 pillow
 pytesseract
+imutils
