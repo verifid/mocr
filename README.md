@@ -1,2 +1,2 @@
-# ocr-detection
-Optical character recognition from identity cards.
+# ocr
+Optical Character Recognition from identity cards with using Python.
