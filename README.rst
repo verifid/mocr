@@ -1,7 +1,7 @@
-ocr
-===
+mocr
+======
 
-Optical Character Recognition from identity cards with using Python.
+Meaningful Optical Character Recognition from identity cards with using Python.
 
 Prerequisites
 =============
