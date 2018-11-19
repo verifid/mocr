@@ -3,3 +3,4 @@ opencv-contrib-python
 pillow
 pytesseract
 imutils
+numpy
