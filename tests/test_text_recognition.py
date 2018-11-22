@@ -21,3 +21,11 @@ class TextRecognizerTest(unittest.TestCase):
         self.assertIsNotNone(original)
         self.assertEqual(original_height, 201)
         self.assertEqual(original_width, 312)
+
+    def test_resize_image(self):
+        (resized_image, original_height, original_width, resized_height, resized_width) = self._text_recognizer.resize_image(150, 150)
+        self.assertIsNotNone(resized_image)
+        self.assertEqual(original_height, 201)
+        self.assertEqual(original_width, 312)
+        self.assertEqual(resized_height, 150)
+        self.assertEqual(resized_width, 150)
