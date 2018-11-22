@@ -1,0 +1,24 @@
+language: python
+
+sudo: required
+
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "nightly"
+
+# command to install dependencies
+install:
+  - sudo apt-get update
+  - sudo apt install tesseract-ocr
+  - sudo apt install libtesseract-dev
+  - pip install -r requirements.txt
+  - pip install -r requirements.testing.txt
+  - pip install -e .
+
+# command to run tests
+script:
+  - py.test -s -v --cov-report xml --cov=mocr
+  - codecov
