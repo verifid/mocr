@@ -36,3 +36,10 @@ class TextRecognizerTest(unittest.TestCase):
         (scores, geometry) = self._text_recognizer.geometry_score(self._east_path, resized_image)
         self.assertIsNotNone(scores)
         self.assertIsNotNone(geometry)
+
+    def test_decode_predictions(self):
+        (resized_image, _, _, _, _) = self._text_recognizer.resize_image(320, 320)
+        (scores, geometry) = self._text_recognizer.geometry_score(self._east_path, resized_image)
+        (rects, confidences) = self._text_recognizer.decode_predictions(scores, geometry)
+        self.assertIsNotNone(rects)
+        self.assertIsNotNone(confidences)

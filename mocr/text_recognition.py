@@ -3,6 +3,7 @@
 
 import sys
 import cv2
+import numpy as np
 
 class TextRecognizer(object):
     """TextRecognizer can be used as to detect meaningful optical characters from identity cards.
@@ -99,3 +100,72 @@ class TextRecognizer(object):
         net.setInput(blob)
         (scores, geometry) = net.forward(layer_names)
         return (scores, geometry)
+
+    def decode_predictions(self, scores, geometry):
+        """Grab the number of rows and columns from the scores volume, then
+        initialize our set of bounding box rectangles and corresponding
+        confidence scores.
+        Args:
+          scores (array):
+            Probabilities.
+          geometry (array):
+            Geometrical data.
+        Returns:
+          rects (array):
+            Bounding boxes.
+          confidences (array):
+            Associated confidences.
+        """
+
+        (num_rows, num_cols) = scores.shape[2:4]
+        rects = []
+        confidences = []
+
+        # loop over the number of rows
+        for y in range(0, num_rows):
+            # extract the scores (probabilities), followed by the
+            # geometrical data used to derive potential bounding box
+            # coordinates that surround text
+            scores_data = scores[0, 0, y]
+            xdata0 = geometry[0, 0, y]
+            xdata1 = geometry[0, 1, y]
+            xdata2 = geometry[0, 2, y]
+            xdata3 = geometry[0, 3, y]
+            angles_data = geometry[0, 4, y]
+
+            # loop over the number of columns
+            for x in range(0, num_cols):
+                # if our score does not have sufficient probability,
+                # ignore it
+                if scores_data[x] < self.min_confidence:
+                    continue
+
+                # compute the offset factor as our resulting feature
+                # maps will be 4x smaller than the input image
+                (offset_x, offset_y) = (x * 4.0, y * 4.0)
+
+                # extract the rotation angle for the prediction and
+                # then compute the sin and cosine
+                angle = angles_data[x]
+                cos = np.cos(angle)
+                sin = np.sin(angle)
+
+                # use the geometry volume to derive the width and height
+                # of the bounding box
+                h = xdata0[x] + xdata2[x]
+                w = xdata1[x] + xdata3[x]
+
+                # compute both the starting and ending (x, y)-coordinates
+                # for the text prediction bounding box
+                endX = int(offset_x + (cos * xdata1[x]) + (sin * xdata2[x]))
+                endY = int(offset_y - (sin * xdata1[x]) + (cos * xdata2[x]))
+                startX = int(endX - w)
+                startY = int(endY - h)
+
+                # add the bounding box coordinates and probability score
+                # to our respective lists
+                rects.append((startX, startY, endX, endY))
+                confidences.append(scores_data[x])
+
+        # return a tuple of the bounding boxes and associated confidences
+        return (rects, confidences)
