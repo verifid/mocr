@@ -43,6 +43,7 @@ class TextRecognizer(object):
         Returns:
           (original, original_height, original_width): Tuple of image, it's height and width.
         """
+
         image = cv2.imread(self.image_path)
         original = image.copy()
         (original_height, original_width) = image.shape[:2]
@@ -60,6 +61,7 @@ class TextRecognizer(object):
         Returns:
           (resized_image, original_height, original_width, resized_height, resized_width): Resized image, original & resized image size.
         """
+
         (original, original_height, original_width) = self.load_image()
         ratio_height = original_height / float(height)
         ratio_width = original_width / float(width)
@@ -67,3 +69,30 @@ class TextRecognizer(object):
         resized_image = cv2.resize(original, (width, height))
         (resized_height, resized_width) = resized_image.shape[:2]
         return (resized_image, original_height, original_width, resized_height, resized_width)
+
+    def geometry_score(self, east_path, resized_image):
+        """Creates scores and geometry to use in predictions.
+        Args:
+          east_path (str):
+            EAST text detector path.
+          resized_image (img):
+            Resized image data.
+        Returns:
+          (scores, geometry): Probabilities and geometrical data.
+        """
+
+        (resized_height, resized_width) = resized_image.shape[:2]
+        layer_names = [
+          "feature_fusion/Conv_7/Sigmoid",
+          "feature_fusion/concat_3"]
+
+        # load the pre-trained EAST text detector
+        net = cv2.dnn.readNet(east_path)
+
+        # construct a blob from the image and then perform a forward pass of
+        # the model to obtain the two output layer sets
+        blob = cv2.dnn.blobFromImage(resized_image, 1.0, (resized_width, resized_height),
+          (123.68, 116.78, 103.94), swapRB=True, crop=False)
+        net.setInput(blob)
+        (scores, geometry) = net.forward(layer_names)
+        return (scores, geometry)
