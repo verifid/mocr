@@ -78,7 +78,10 @@ class TextRecognizer(object):
           resized_image (img):
             Resized image data.
         Returns:
-          (scores, geometry): Probabilities and geometrical data.
+          scores (array):
+            Probabilities.
+          geometry (array):
+            Geometrical data.
         """
 
         (resized_height, resized_width) = resized_image.shape[:2]
