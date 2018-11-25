@@ -4,6 +4,7 @@
 import sys
 import cv2
 import numpy as np
+from imutils.object_detection import non_max_suppression
 
 class TextRecognizer(object):
     """TextRecognizer can be used as to detect meaningful optical characters from identity cards.
@@ -169,3 +170,20 @@ class TextRecognizer(object):
 
         # return a tuple of the bounding boxes and associated confidences
         return (rects, confidences)
+
+    def boxes(self, scores, geometry):
+        """Returns boxes after decoding predictions and then applying
+        non-maxima suppression.
+        Args:
+          scores (array):
+            Probabilities.
+          geometry (array):
+            Geometrical data.
+        Returns:
+          boxes (array):
+            Overlapping bounding boxes.
+        """
+
+        (rects, confidences) = self.decode_predictions(scores, geometry)
+        boxes = non_max_suppression(np.array(rects), probs=confidences)
+        return boxes
