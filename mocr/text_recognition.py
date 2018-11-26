@@ -164,14 +164,14 @@ class TextRecognizer(object):
 
                 # compute both the starting and ending (x, y)-coordinates
                 # for the text prediction bounding box
-                endX = int(offset_x + (cos * xdata1[x]) + (sin * xdata2[x]))
-                endY = int(offset_y - (sin * xdata1[x]) + (cos * xdata2[x]))
-                startX = int(endX - w)
-                startY = int(endY - h)
+                end_x = int(offset_x + (cos * xdata1[x]) + (sin * xdata2[x]))
+                end_y = int(offset_y - (sin * xdata1[x]) + (cos * xdata2[x]))
+                start_x = int(end_x - w)
+                start_y = int(end_y - h)
 
                 # add the bounding box coordinates and probability score
                 # to our respective lists
-                rects.append((startX, startY, endX, endY))
+                rects.append((start_x, start_y, end_x, end_y))
                 confidences.append(scores_data[x])
 
         # return a tuple of the bounding boxes and associated confidences
