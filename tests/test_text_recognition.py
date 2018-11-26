@@ -24,30 +24,32 @@ class TextRecognizerTest(unittest.TestCase):
         self.assertEqual(original_width, 312)
 
     def test_resize_image(self):
-        (resized_image, original_height, original_width, ratio_height, ratio_width, resized_height, resized_width) = self._text_recognizer.resize_image(320, 320)
+        (image, _, _) = self._text_recognizer.load_image()
+        (resized_image, ratio_height, ratio_width, resized_height, resized_width) = self._text_recognizer.resize_image(image, 320, 320)
         self.assertIsNotNone(resized_image)
-        self.assertEqual(original_height, 201)
-        self.assertEqual(original_width, 312)
         self.assertEqual(ratio_height, 0.628125)
         self.assertEqual(ratio_width, 0.975)
         self.assertEqual(resized_height, 320)
         self.assertEqual(resized_width, 320)
 
     def test_geometry_score(self):
-        (resized_image, _, _, _, _, _, _) = self._text_recognizer.resize_image(320, 320)
+        (image, _, _) = self._text_recognizer.load_image()
+        (resized_image, _, _, _, _) = self._text_recognizer.resize_image(image, 320, 320)
         (scores, geometry) = self._text_recognizer.geometry_score(self._east_path, resized_image)
         self.assertIsNotNone(scores)
         self.assertIsNotNone(geometry)
 
     def test_decode_predictions(self):
-        (resized_image, _, _, _, _, _, _) = self._text_recognizer.resize_image(320, 320)
+        (image, _, _) = self._text_recognizer.load_image()
+        (resized_image, _, _, _, _) = self._text_recognizer.resize_image(image, 320, 320)
         (scores, geometry) = self._text_recognizer.geometry_score(self._east_path, resized_image)
         (rects, confidences) = self._text_recognizer.decode_predictions(scores, geometry)
         self.assertIsNotNone(rects)
         self.assertIsNotNone(confidences)
 
     def test_boxes(self):
-        (resized_image, _, _, _, _, _, _) = self._text_recognizer.resize_image(320, 320)
+        (image, _, _) = self._text_recognizer.load_image()
+        (resized_image, _, _, _, _) = self._text_recognizer.resize_image(image, 320, 320)
         (scores, geometry) = self._text_recognizer.geometry_score(self._east_path, resized_image)
         boxes = self._text_recognizer.boxes(scores, geometry)
         self.assertIsNotNone(boxes)

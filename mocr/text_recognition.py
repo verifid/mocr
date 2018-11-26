@@ -55,26 +55,28 @@ class TextRecognizer(object):
         (original_height, original_width) = image.shape[:2]
         return (original, original_height, original_width)
 
-    def resize_image(self, width, height):
+    def resize_image(self, image, new_width, new_height):
         """Resize the image and grab the new image dimensions.
         Sets the new width and height and then determine the ratio in change
         for both the width and height.
         Args:
-          width (int):
+          image (bytes):
+            Loaded image data.
+          new_width (int):
             New width to resize.
-          height (int):
+          new_height (int):
             New height to resize.
         Returns:
-          (resized_image, original_height, original_width, ratio_height, ratio_width, resized_height, resized_width): Resized image, original & resized image size.
+          (resized_image, ratio_height, ratio_width, resized_height, resized_width): Resized image and it's specs.
         """
 
-        (original, original_height, original_width) = self.load_image()
-        ratio_height = original_height / float(height)
-        ratio_width = original_width / float(width)
+        original_height, original_width = image.shape[:2]
+        ratio_height = original_height / float(new_height)
+        ratio_width = original_width / float(new_width)
 
-        resized_image = cv2.resize(original, (width, height))
+        resized_image = cv2.resize(image, (new_width, new_height))
         (resized_height, resized_width) = resized_image.shape[:2]
-        return (resized_image, original_height, original_width, ratio_height, ratio_width, resized_height, resized_width)
+        return (resized_image, ratio_height, ratio_width, resized_height, resized_width)
 
     def geometry_score(self, east_path, resized_image):
         """Creates scores and geometry to use in predictions.
