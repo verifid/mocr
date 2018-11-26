@@ -4,6 +4,8 @@
 import sys
 import cv2
 import numpy as np
+import pytesseract
+
 from imutils.object_detection import non_max_suppression
 
 class TextRecognizer(object):
@@ -193,3 +195,62 @@ class TextRecognizer(object):
         (rects, confidences) = self.decode_predictions(scores, geometry)
         boxes = non_max_suppression(np.array(rects), probs=confidences)
         return boxes
+
+    def get_results(self, boxes, image, ratio_height, ratio_width):
+        """Returns the list of sorted boxes.
+        Args:
+          boxes (array):
+            Overlapping bounding boxes.
+          image (bytes):
+            Loaded image data.
+          ratio_height (float):
+            Resize ratio of height.
+          ratio_width (float):
+            Resize ratio of width.
+        Returns:
+          results (array):
+            Bounding box coordinates from top to bottom.
+        """
+
+        (original_height, original_width) = image.shape[:2]
+        # initialize the list of results
+        results = []
+        # loop over the bounding boxes
+        for (start_x, start_y, end_x, end_y) in boxes:
+            # scale the bounding box coordinates based on the respective
+            # ratios
+            start_x = int(start_x * ratio_width)
+            start_y = int(start_y * ratio_height)
+            end_x = int(end_x * ratio_width)
+            end_y = int(end_y * ratio_height)
+
+            # in order to obtain a better OCR of the text we can potentially
+            # apply a bit of padding surrounding the bounding box -- here we
+            # are computing the deltas in both the x and y directions
+            dX = int((end_x - start_x) * self.padding)
+            dY = int((end_y - start_y) * self.padding)
+
+            # apply padding to each side of the bounding box, respectively
+            start_x = max(0, start_x - dX)
+            start_y = max(0, start_y - dY)
+            end_x = min(original_width, end_x + (dX * 2))
+            end_y = min(original_height, end_y + (dY * 2))
+
+            # extract the actual padded ROI
+            roi = image[start_y:end_y, start_x:end_x]
+
+            # in order to apply Tesseract v4 to OCR text we must supply
+            # (1) a language, (2) an OEM flag of 4, indicating that the we
+            # wish to use the LSTM neural net model for OCR, and finally
+            # (3) an OEM value, in this case, 7 which implies that we are
+            # treating the ROI as a single line of text
+            config = str.format('-l {0} --oem 1 --psm 7', self.lang)
+            text = pytesseract.image_to_string(roi, config=config)
+
+            # add the bounding box coordinates and OCR'd text to the list
+            # of results
+            results.append(((start_x, start_y, end_x, end_y), text))
+
+        # sort the results bounding box coordinates from top to bottom
+        results = sorted(results, key=lambda r:r[0][1])
+        return results
