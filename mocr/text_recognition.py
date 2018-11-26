@@ -17,7 +17,7 @@ class TextRecognizer(object):
                  width=320,
                  height=320,
                  padding=0.0,
-                 lang='en'):
+                 lang='eng'):
         """Returns a TextRecognizer instance.
         Args:
           image_path (str):
