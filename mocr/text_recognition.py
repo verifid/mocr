@@ -16,7 +16,8 @@ class TextRecognizer(object):
                  min_confidence=0.5,
                  width=320,
                  height=320,
-                 padding=0.0):
+                 padding=0.0,
+                 lang='en'):
         """Returns a TextRecognizer instance.
         Args:
           image_path (str):
@@ -31,6 +32,8 @@ class TextRecognizer(object):
             Nearest multiple of 32 for resized height.
           padding (float):
             Amount of padding to add to each border of ROI.
+          lang (str):
+            Language for tessaract.
         """
 
         self.image_path = image_path
@@ -39,6 +42,7 @@ class TextRecognizer(object):
         self.width = width
         self.height = height
         self.padding = padding
+        self.lang = lang
 
     def load_image(self):
         """Load the input image and grab the image dimensions.
