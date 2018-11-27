@@ -13,6 +13,7 @@ python:
 install:
   - sudo apt-get update
   - sudo apt install tesseract-ocr
+  - sudo apt install tesseract-ocr-deu
   - sudo apt install libtesseract-dev
   - pip install -r requirements.txt
   - pip install -r requirements.testing.txt

@@ -61,3 +61,13 @@ class TextRecognizerTest(unittest.TestCase):
         boxes = self._text_recognizer.boxes(scores, geometry)
         results = self._text_recognizer.get_results(boxes, image, ratio_height, ratio_width)
         self.assertIsNotNone(results)
+
+    def test_de_get_results(self):
+        image_path = os.path.join('tests', 'data/sample_de_identity_card.jpg')
+        text_recognizer = TextRecognizer(image_path, lang='deu')
+        (image, _, _) = text_recognizer.load_image()
+        (resized_image, ratio_height, ratio_width, _, _) = text_recognizer.resize_image(image, 320, 320)
+        (scores, geometry) = text_recognizer.geometry_score(self._east_path, resized_image)
+        boxes = text_recognizer.boxes(scores, geometry)
+        results = text_recognizer.get_results(boxes, image, ratio_height, ratio_width)
+        self.assertIsNotNone(results)
