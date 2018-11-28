@@ -12,4 +12,4 @@ Meaningful Optical Character Recognition from identity cards with using Python.
 Prerequisites
 =============
 
-`Tessaract <https://github.com/tesseract-ocr/tesseract>`_ must be installed on your computer before using OCR.
+`Tessaract <https://github.com/tesseract-ocr/tesseract>`_ must be installed on your computer before using OCR. Please check `installation link <https://github.com/tesseract-ocr/tesseract#installing-tesseract>`_ for details.
