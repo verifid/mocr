@@ -209,7 +209,7 @@ class TextRecognizer(object):
             Resize ratio of width.
         Returns:
           results (array):
-            Bounding box coordinates from top to bottom.
+            Texts with bounding box coordinates from top to bottom.
         """
 
         (original_height, original_width) = image.shape[:2]
