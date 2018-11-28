@@ -41,7 +41,7 @@ setup(
     install_requires=['opencv-python', 'opencv-contrib-python', 'pillow', 'pytesseract', 'imutils', 'numpy'],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
-    keywords='ocr, optical character recognition, identity card, meaningful',
+    keywords='ocr, optical character recognition, identity card, deep learning, opencv, meaningful',
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
