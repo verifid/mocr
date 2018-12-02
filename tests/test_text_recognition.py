@@ -10,7 +10,7 @@ class TextRecognizerTest(unittest.TestCase):
 
     def setUp(self):
         self._image_path = os.path.join('tests', 'data/sample_uk_identity_card.png')
-        self._east_path = os.path.join('mocr', 'model/frozen_east_text_detection.pb')
+        self._east_path = os.path.join('tests', 'model/frozen_east_text_detection.pb')
         self._text_recognizer = TextRecognizer(self._image_path)
 
     def test_init(self):
