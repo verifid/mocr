@@ -11,7 +11,7 @@ class TextRecognizerTest(unittest.TestCase):
     def setUp(self):
         self._image_path = os.path.join('tests', 'data/sample_uk_identity_card.png')
         self._east_path = os.path.join('tests', 'model/frozen_east_text_detection.pb')
-        self._text_recognizer = TextRecognizer(self._image_path)
+        self._text_recognizer = TextRecognizer(self._image_path, self._east_path)
 
     def test_init(self):
         self.assertIsNotNone(self._text_recognizer)
@@ -64,7 +64,7 @@ class TextRecognizerTest(unittest.TestCase):
 
     def test_de_get_results(self):
         image_path = os.path.join('tests', 'data/sample_de_identity_card.jpg')
-        text_recognizer = TextRecognizer(image_path, lang='deu')
+        text_recognizer = TextRecognizer(image_path, self._east_path, lang='deu')
         (image, _, _) = text_recognizer.load_image()
         (resized_image, ratio_height, ratio_width, _, _) = text_recognizer.resize_image(image, 320, 320)
         (scores, geometry) = text_recognizer.geometry_score(self._east_path, resized_image)

@@ -14,7 +14,7 @@ class TextRecognizer(object):
 
     def __init__(self,
                  image_path,
-                 east_path='model/frozen_east_text_detection.pb',
+                 east_path,
                  min_confidence=0.5,
                  width=320,
                  height=320,
