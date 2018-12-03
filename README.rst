@@ -30,6 +30,10 @@ Installation
 
 **From source**
 
+Install module using `pip`::
+
+    $ pip install mocr
+
 Download the latest `mocr` library from: https://github.com/verifid/mocr
 
 Install module using `pip`::
@@ -69,11 +73,11 @@ Initiating the ``TextRecognizer`` with identity image and then finding the texts
     image_path = os.path.join('tests', 'data/sample_uk_identity_card.png')
     east_path = os.path.join('mocr', 'model/frozen_east_text_detection.pb')
 
-    text_recognizer = TextRecognizer(image_path)
+    text_recognizer = TextRecognizer(image_path, east_path)
     (image, _, _) = text_recognizer.load_image()
     (resized_image, ratio_height, ratio_width, _, _) = text_recognizer.resize_image(image, 320, 320)
     (scores, geometry) = text_recognizer.geometry_score(east_path, resized_image)
     boxes = text_recognizer.boxes(scores, geometry)
     results = text_recognizer.get_results(boxes, image, ratio_height, ratio_width)
 
-    # results: Texts with bounding boxes
+    # results: Meaningful texts with bounding boxes
