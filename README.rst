@@ -1,6 +1,12 @@
 mocr
 ======
 
+.. image:: https://img.shields.io/pypi/v/mocr.svg
+    :target: https://pypi.org/pypi/mocr/
+
+.. image:: https://img.shields.io/pypi/pyversions/mocr.svg
+    :target: https://pypi.org/project/mocr
+
 .. image:: https://travis-ci.org/verifid/mocr.svg?branch=master
     :target: https://travis-ci.org/verifid/mocr
 
