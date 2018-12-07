@@ -36,7 +36,6 @@ if __name__ == '__main__':
         pass
 
     image_path = sys.argv[2]
-    # if len(sys.argv) > 4:
     east_path = sys.argv[4]
     text_recognizer = TextRecognizer(image_path, east_path)
 
