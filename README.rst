@@ -87,3 +87,22 @@ Initiating the ``TextRecognizer`` with identity image and then finding the texts
     results = text_recognizer.get_results(boxes, image, ratio_height, ratio_width)
 
     # results: Meaningful texts with bounding boxes
+
+Screenshots
+-----------
+
+**Before**
+
+.. image:: screenshots/sample_uk_identity_card.png
+    :width: 201px
+    :align: center
+    :height: 312px
+    :alt: Before detection
+
+**After**
+
+.. image:: screenshots/uk_identity_card_after_detection.png
+    :width: 201px
+    :align: center
+    :height: 312px
+    :alt: After detection
