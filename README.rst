@@ -88,6 +88,13 @@ Initiating the ``TextRecognizer`` with identity image and then finding the texts
 
     # results: Meaningful texts with bounding boxes
 
+CLI
+===
+
+Sample command line usage::
+
+    python -m mocr --image tests/data/sample_uk_identity_card.png --east tests/model/frozen_east_text_detection.pb
+
 Screenshots
 -----------
 
