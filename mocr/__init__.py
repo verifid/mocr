@@ -11,7 +11,7 @@ __copyright__    = 'Copyright (c) 2018 Abdullah Selek'
 __license__      = 'MIT License'
 __version__      = '0.1.1'
 __url__          = 'https://github.com/verifid/mocr'
-__download_url__ = 'https://github.com/verifid/mocr'
+__download_url__ = 'https://pypi.org/project/mocr/'
 __description__  = 'Meaningful Optical Character Recognition from identity cards with Deep Learning.'
 
 from .text_recognition import TextRecognizer
