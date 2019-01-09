@@ -1,2 +1,4 @@
+[paths]
+source = mocr/
 [run]
 omit = mocr/__main__.py
