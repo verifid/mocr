@@ -71,9 +71,7 @@ To run the unit tests against a set of Python versions::
 Sample Usage
 ============
 
-* ``text_recognition``:
-
-Initiating the ``TextRecognizer`` with identity image and then finding the texts with their frames::
+* ``text_recognition`` Initiating the ``TextRecognizer`` with identity image and then finding the texts with their frames:
 
 .. code:: python
 
