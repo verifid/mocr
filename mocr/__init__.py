@@ -15,3 +15,4 @@ __download_url__ = 'https://pypi.org/project/mocr/'
 __description__  = 'Meaningful Optical Character Recognition from identity cards with Deep Learning.'
 
 from .text_recognition import TextRecognizer
+from mocr import face_detection
