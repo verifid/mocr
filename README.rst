@@ -71,7 +71,11 @@ To run the unit tests against a set of Python versions::
 Sample Usage
 ============
 
+* ``text_recognition``:
+
 Initiating the ``TextRecognizer`` with identity image and then finding the texts with their frames::
+
+.. code:: python
 
     import os
     from mocr import TextRecognizer
@@ -87,6 +91,16 @@ Initiating the ``TextRecognizer`` with identity image and then finding the texts
     results = text_recognizer.get_results(boxes, image, ratio_height, ratio_width)
 
     # results: Meaningful texts with bounding boxes
+
+* ``face_detection``:
+
+.. code:: python
+
+    from mocr import face_detection
+
+    image_path = 'YOUR_IDENTITY_IMAGE_PATH'
+    face_image = face_detection.detect_face(image_path)
+    # face_image is the byte array detected and cropped image from original image
 
 CLI
 ===
