@@ -122,16 +122,11 @@ Screenshots
 
 **Before**
 
-.. image:: screenshots/sample_uk_identity_card.png
-    :width: 201px
-    :align: center
-    :height: 312px
-    :alt: Before detection
+|image_before|
 
 **After**
 
-.. image:: screenshots/uk_identity_card_after_detection.png
-    :width: 201px
-    :align: center
-    :height: 312px
-    :alt: After detection
+|image_after|
+
+.. |image_before| image:: https://raw.githubusercontent.com/verifid/mocr/master/screenshots/sample_uk_identity_card.png
+.. |image_after| image:: https://raw.githubusercontent.com/verifid/mocr/master/screenshots/uk_identity_card_after_detection.png
