@@ -103,9 +103,19 @@ Sample Usage
 CLI
 ===
 
-Sample command line usage::
+Sample command line usage
+
+* Optical Character Recognition
+
+.. code::
 
     python -m mocr --image tests/data/sample_uk_identity_card.png --east tests/model/frozen_east_text_detection.pb
+
+* Face detection
+
+.. code::
+
+    python -m mocr --image-face 'tests/data/sample_de_identity_card.jpg'
 
 Screenshots
 -----------
