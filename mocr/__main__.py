@@ -6,7 +6,10 @@ import sys
 import argparse
 import cv2
 
-from mocr import TextRecognizer
+from mocr import (
+    TextRecognizer,
+    face_detection
+)
 
 def display_image(image, results, file_name):
     output = image.copy()
@@ -23,11 +26,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Meaningful Optical Character Recognition from identity cards with Deep Learning.')
     parser.add_argument('--image', type=str, help='Path to input image on file system.')
     parser.add_argument('--east', type=str, help='Path to input EAST text detector on file system.')
+    parser.add_argument('--image-face', type=str, help='Path to input image on file system.')
     args = parser.parse_args()
-
-    if len(sys.argv) < 4:
-        print('Specify an image path and east path')
-        sys.exit(1)
 
     # Optional bash tab completion support
     try:
@@ -36,14 +36,29 @@ if __name__ == '__main__':
     except ImportError:
         pass
 
-    image_path = sys.argv[2]
-    east_path = sys.argv[4]
-    text_recognizer = TextRecognizer(image_path, east_path)
-    file_name = os.path.basename(image_path)
+    if sys.argv[1] == '--image-face':
+        if len(sys.argv) < 3:
+            print('Specify an image path')
+            sys.exit(1)
 
-    (image, _, _) = text_recognizer.load_image()
-    (resized_image, ratio_height, ratio_width, _, _) = text_recognizer.resize_image(image, 320, 320)
-    (scores, geometry) = text_recognizer.geometry_score(east_path, resized_image)
-    boxes = text_recognizer.boxes(scores, geometry)
-    results = text_recognizer.get_results(boxes, image, ratio_height, ratio_width)
-    display_image(image, results, file_name)
+        image_path = sys.argv[2]
+        file_name = os.path.basename(image_path)
+        face = face_detection.detect_face(image_path)
+        cv2.imshow("Found profile", face)
+        cv2.imwrite('screenshots/profile_' + file_name, face)
+    else:
+        if len(sys.argv) < 4:
+            print('Specify an image path and east path')
+            sys.exit(1)
+
+        image_path = sys.argv[2]
+        east_path = sys.argv[4]
+        text_recognizer = TextRecognizer(image_path, east_path)
+        file_name = os.path.basename(image_path)
+
+        (image, _, _) = text_recognizer.load_image()
+        (resized_image, ratio_height, ratio_width, _, _) = text_recognizer.resize_image(image, 320, 320)
+        (scores, geometry) = text_recognizer.geometry_score(east_path, resized_image)
+        boxes = text_recognizer.boxes(scores, geometry)
+        results = text_recognizer.get_results(boxes, image, ratio_height, ratio_width)
+        display_image(image, results, file_name)
