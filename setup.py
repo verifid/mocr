@@ -23,6 +23,12 @@ def extract_metaitem(meta):
         return meta_match.group(1)
     raise RuntimeError('Unable to find __{meta}__ string.'.format(meta=meta))
 
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+
+with open('requirements.testing.txt') as f:
+    requirements_testing = f.read().splitlines()
+
 setup(
     name='mocr',
     version=extract_metaitem('version'),
@@ -38,9 +44,9 @@ setup(
     packages=find_packages(exclude=('tests', 'docs')),
     include_package_data=True,
     platforms=['Any'],
-    install_requires=['opencv-python', 'opencv-contrib-python', 'pillow', 'pytesseract', 'imutils', 'numpy'],
+    install_requires=requirements,
     setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    tests_require=requirements_testing,
     keywords='ocr, optical character recognition, identity card, deep learning, opencv, meaningful',
     classifiers=[
         'Intended Audience :: Developers',
