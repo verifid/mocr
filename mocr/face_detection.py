@@ -4,7 +4,7 @@
 import os
 import cv2
 
-def detect_face(image_pah):
+def detect_face(image_path):
     """Detect face from given image path.
         Args:
           image_path (str):
@@ -18,7 +18,7 @@ def detect_face(image_pah):
     cascade_path = os.path.join(os.path.dirname(__file__), 'haarcascades/haarcascade_frontalface_default.xml')
     face_cascade = cv2.CascadeClassifier(cascade_path)
     # Read the image
-    image = cv2.imread(image_pah)
+    image = cv2.imread(image_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # Detect faces in the image
     faces = face_cascade.detectMultiScale(
