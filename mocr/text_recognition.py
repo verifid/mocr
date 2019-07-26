@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import sys
 import cv2
 import numpy as np
@@ -52,6 +53,9 @@ class TextRecognizer(object):
           (original, original_height, original_width): Tuple of image, it's height and width.
         """
 
+        if not os.path.isfile(self.image_path):
+	        print('No image found on given image path!')
+	        return (None, 0, 0)
         image = cv2.imread(self.image_path)
         original = image.copy()
         (original_height, original_width) = image.shape[:2]
