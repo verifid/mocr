@@ -56,6 +56,7 @@ class TextRecognizer(object):
         if not os.path.isfile(self.image_path):
 	        print('No image found on given image path!')
 	        return (None, 0, 0)
+
         image = cv2.imread(self.image_path)
         original = image.copy()
         (original_height, original_width) = image.shape[:2]
@@ -75,6 +76,9 @@ class TextRecognizer(object):
         Returns:
           (resized_image, ratio_height, ratio_width, resized_height, resized_width): Resized image and it's specs.
         """
+
+        if image is None:
+            return (None, 0, 0, 0, 0)
 
         original_height, original_width = image.shape[:2]
         ratio_height = original_height / float(new_height)
@@ -97,6 +101,9 @@ class TextRecognizer(object):
           geometry (array):
             Geometrical data.
         """
+
+        if resized_image is None:
+            return (None, None)
 
         (resized_height, resized_width) = resized_image.shape[:2]
         layer_names = [
@@ -129,6 +136,9 @@ class TextRecognizer(object):
           confidences (array):
             Associated confidences.
         """
+
+        if scores is None or geometry is None:
+            return (None, None)
 
         (num_rows, num_cols) = scores.shape[2:4]
         rects = []
@@ -196,6 +206,9 @@ class TextRecognizer(object):
             Overlapping bounding boxes.
         """
 
+        if scores is None or geometry is None:
+            return None
+
         (rects, confidences) = self.decode_predictions(scores, geometry)
         boxes = non_max_suppression(np.array(rects), probs=confidences)
         return boxes
@@ -215,6 +228,9 @@ class TextRecognizer(object):
           results (array):
             Texts with bounding box coordinates from top to bottom.
         """
+
+        if boxes is None or image is None:
+            return None
 
         (original_height, original_width) = image.shape[:2]
         # initialize the list of results
