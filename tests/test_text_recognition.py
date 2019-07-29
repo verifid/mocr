@@ -86,7 +86,7 @@ class TextRecognizerTest(unittest.TestCase):
         image_path = os.path.join('tests', 'data/unavailable.png')
         east_path = os.path.join('tests', 'model/frozen_east_text_detection.pb')
         text_recognizer = TextRecognizer(image_path, east_path)
-        (image, _, _) = self._text_recognizer.load_image()
+        (image, _, _) = text_recognizer.load_image()
         self.assertIsNone(image)
         (resized_image, ratio_height, ratio_width, _, _) = text_recognizer.resize_image(image, 320, 320)
         self.assertIsNone(resized_image)
