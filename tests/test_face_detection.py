@@ -18,3 +18,6 @@ class FaceDetectionTest(unittest.TestCase):
         image_path = os.path.join(os.path.dirname(__file__), 'data/test.png')
         face_image = face_detection.detect_face(image_path)
         self.assertIsNone(face_image)
+        image_path = os.path.join(os.path.dirname(__file__), 'data/unavailable.png')
+        face_image = face_detection.detect_face(image_path)
+        self.assertIsNone(face_image)
