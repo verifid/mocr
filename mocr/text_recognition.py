@@ -103,6 +103,10 @@ class TextRecognizer(object):
             Geometrical data.
         """
 
+        if not os.path.isfile(east_path):
+            print('text_recognition:geometry_score No east detector found on given path!')
+            return (None, None)
+
         if resized_image is None:
             print('text_recognition:geometry_score Given resized_image is none!')
             return (None, None)

@@ -39,6 +39,16 @@ class TextRecognizerTest(unittest.TestCase):
         self.assertIsNotNone(scores)
         self.assertIsNotNone(geometry)
 
+    def test_geometry_score_fail(self):
+        image_path = os.path.join('tests', 'data/sample_uk_identity_card.png')
+        east_path = os.path.join('tests', 'model/unavailable.pb')
+        text_recognizer = TextRecognizer(image_path, east_path)
+        (image, _, _) = text_recognizer.load_image()
+        (resized_image, _, _, _, _) = text_recognizer.resize_image(image, 320, 320)
+        (scores, geometry) = text_recognizer.geometry_score(east_path, resized_image)
+        self.assertIsNone(scores)
+        self.assertIsNone(geometry)
+
     def test_decode_predictions(self):
         (image, _, _) = self._text_recognizer.load_image()
         (resized_image, _, _, _, _) = self._text_recognizer.resize_image(image, 320, 320)
