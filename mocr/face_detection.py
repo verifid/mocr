@@ -14,6 +14,10 @@ def detect_face(image_path):
             Bytes array for detected face image.
     """
 
+    if not os.path.isfile(image_path):
+        print('face_detection:detect_face No image found on given image path!')
+        return None
+
     # Create the haar cascade
     cascade_path = os.path.join(os.path.dirname(__file__), 'haarcascades/haarcascade_frontalface_default.xml')
     face_cascade = cv2.CascadeClassifier(cascade_path)
