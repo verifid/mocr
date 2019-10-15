@@ -14,6 +14,7 @@ class FaceDetectionTest(unittest.TestCase):
         face_image = face_detection.detect_face(image_path)
         self.assertIsNotNone(face_image)
 
+    
     def test_detect_face_fail(self):
         image_path = os.path.join(os.path.dirname(__file__), 'data/test.png')
         face_image = face_detection.detect_face(image_path)
@@ -22,6 +23,12 @@ class FaceDetectionTest(unittest.TestCase):
         face_image = face_detection.detect_face(image_path)
         self.assertIsNone(face_image)
 
+
+    def main(self):
+        self.test_detect_face_success()
+        self.test_detect_face_fail()
+
+
 if __name__ == "__main__":
     face_detection_tests = FaceDetectionTest()
-    face_detection_tests.test_detect_face_success()
+    face_detection_tests.main()
