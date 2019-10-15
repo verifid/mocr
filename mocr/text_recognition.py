@@ -47,6 +47,7 @@ class TextRecognizer(object):
         self.padding = padding
         self.lang = lang
 
+    
     def load_image(self):
         """Load the input image and grab the image dimensions.
         Returns:
@@ -62,6 +63,7 @@ class TextRecognizer(object):
         (original_height, original_width) = image.shape[:2]
         return (original, original_height, original_width)
 
+    
     def resize_image(self, image, new_width, new_height):
         """Resize the image and grab the new image dimensions.
         Sets the new width and height and then determine the ratio in change
@@ -89,6 +91,7 @@ class TextRecognizer(object):
         (resized_height, resized_width) = resized_image.shape[:2]
         return (resized_image, ratio_height, ratio_width, resized_height, resized_width)
 
+    
     def geometry_score(self, east_path, resized_image):
         """Creates scores and geometry to use in predictions.
         Args:
@@ -127,6 +130,7 @@ class TextRecognizer(object):
         (scores, geometry) = net.forward(layer_names)
         return (scores, geometry)
 
+    
     def decode_predictions(self, scores, geometry):
         """Grab the number of rows and columns from the scores volume, then
         initialize our set of bounding box rectangles and corresponding
@@ -200,6 +204,7 @@ class TextRecognizer(object):
         # return a tuple of the bounding boxes and associated confidences
         return (rects, confidences)
 
+
     def boxes(self, scores, geometry):
         """Returns boxes after decoding predictions and then applying
         non-maxima suppression.
@@ -221,6 +226,7 @@ class TextRecognizer(object):
         boxes = non_max_suppression(np.array(rects), probs=confidences)
         return boxes
 
+    
     def get_results(self, boxes, image, ratio_height, ratio_width):
         """Returns the list of sorted boxes.
         Args:

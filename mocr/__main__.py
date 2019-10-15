@@ -21,6 +21,7 @@ def display_image(image, results, file_name):
     cv2.imshow('Text Detection', output)
     cv2.imwrite('screenshots/processed_' + file_name, output)
 
+
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='Meaningful Optical Character Recognition from identity cards with Deep Learning.')
