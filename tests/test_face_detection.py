@@ -21,3 +21,7 @@ class FaceDetectionTest(unittest.TestCase):
         image_path = os.path.join(os.path.dirname(__file__), 'data/unavailable.png')
         face_image = face_detection.detect_face(image_path)
         self.assertIsNone(face_image)
+
+if __name__ == "__main__":
+    face_detection_tests = FaceDetectionTest()
+    face_detection_tests.test_detect_face_success()
