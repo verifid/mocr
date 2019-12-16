@@ -20,7 +20,7 @@ Introduction
 ============
 
 **mocr** is a library that can be used to detect meaningful optical characters from identity cards. Code base is pure ``Python`` and
-works with 2.7 and most of the 3.x versions. It has some low level dependencies such as ``Tesseract``. **mocr** uses a pre-trained east
+works with 3.x versions. It has some low level dependencies such as ``Tesseract``. **mocr** uses a pre-trained east
 detector with OpenCV and applies it's Deep Learning techniques.
 
 It has a pre-trained east detector inside the module and a custom trained model can be given as a parameter.
