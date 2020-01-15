@@ -4,7 +4,8 @@
 import os
 import cv2
 
-def detect_face(image_path):
+
+def detect_face(image_path: str):
     """Detect face from given image path.
         Args:
           image_path (str):

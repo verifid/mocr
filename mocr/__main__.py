@@ -11,6 +11,7 @@ from mocr import (
     face_detection
 )
 
+
 def display_image(image, results, file_name):
     output = image.copy()
     # loop over the results

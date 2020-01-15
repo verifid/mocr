@@ -8,19 +8,21 @@ import numpy as np
 import pytesseract
 
 from imutils.object_detection import non_max_suppression
+from typing import List
+
 
 class TextRecognizer(object):
     """TextRecognizer can be used as to detect meaningful optical characters from identity cards.
     """
 
     def __init__(self,
-                 image_path,
-                 east_path,
-                 min_confidence=0.5,
-                 width=320,
-                 height=320,
-                 padding=0.0,
-                 lang='eng'):
+                 image_path: str,
+                 east_path: str,
+                 min_confidence: float = 0.5,
+                 width: int = 320,
+                 height: int = 320,
+                 padding: float = 0.0,
+                 lang: str = 'eng'):
         """Returns a TextRecognizer instance.
         Args:
           image_path (str):
@@ -64,7 +66,10 @@ class TextRecognizer(object):
         return (original, original_height, original_width)
 
     
-    def resize_image(self, image, new_width, new_height):
+    def resize_image(self,
+                     image: bytes,
+                     new_width: int,
+                     new_height: int):
         """Resize the image and grab the new image dimensions.
         Sets the new width and height and then determine the ratio in change
         for both the width and height.
@@ -92,7 +97,9 @@ class TextRecognizer(object):
         return (resized_image, ratio_height, ratio_width, resized_height, resized_width)
 
     
-    def geometry_score(self, east_path, resized_image):
+    def geometry_score(self,
+                       east_path: str,
+                       resized_image: List[bytes]):
         """Creates scores and geometry to use in predictions.
         Args:
           east_path (str):
@@ -131,7 +138,7 @@ class TextRecognizer(object):
         return (scores, geometry)
 
     
-    def decode_predictions(self, scores, geometry):
+    def decode_predictions(self, scores: List, geometry: List):
         """Grab the number of rows and columns from the scores volume, then
         initialize our set of bounding box rectangles and corresponding
         confidence scores.
@@ -205,7 +212,7 @@ class TextRecognizer(object):
         return (rects, confidences)
 
 
-    def boxes(self, scores, geometry):
+    def boxes(self, scores: List, geometry: List):
         """Returns boxes after decoding predictions and then applying
         non-maxima suppression.
         Args:
@@ -227,7 +234,11 @@ class TextRecognizer(object):
         return boxes
 
     
-    def get_results(self, boxes, image, ratio_height, ratio_width):
+    def get_results(self,
+                    boxes: List,
+                    image: bytes,
+                    ratio_height: float,
+                    ratio_width: float):
         """Returns the list of sorted boxes.
         Args:
           boxes (array):
