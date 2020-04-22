@@ -1,0 +1,55 @@
+site_name: mocr
+site_description: Meaningful Optical Character Recognition from identity cards with Deep Learning.
+site_url: https://mocr.verifid.app/
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: amber
+  favicon: images/favicon.png
+  language: en
+repo_name: verifid/mocr
+repo_url: https://github.com/verifid/mocr
+edit_uri: ''
+nav:
+- mocr: index.md
+- installation.md
+- Module Documentation:
+  - module/face_detection.md
+  - module/text_recognition.md
+  - module/cli.md
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+      watch:
+        - mocr
+markdown_extensions:
+- toc:
+    permalink: true
+- markdown.extensions.codehilite:
+    guess_lang: false
+- markdown_include.include:
+    base_path: docs
+- admonition
+- codehilite
+- extra
+extra:
+  social:
+  - icon: fontawesome/brands/github-alt
+    link: https://github.com/verifid
+  - icon: fontawesome/brands/linkedin
+    link: https://www.linkedin.com/in/abdullahselek
+  - icon: fontawesome/solid/globe
+    link: https://verifid.app
+extra_css:
+- css/termynal.css
+- css/custom.css
+extra_javascript:
+- https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js
+- js/termynal.js
+- js/custom.js
