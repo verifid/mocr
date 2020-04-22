@@ -1,6 +1,9 @@
 mocr
 ======
 
+.. image:: https://github.com/verifid/mocr/workflows/mocr%20ci/badge.svg
+    :target: https://github.com/verifid/mocr/actions
+
 .. image:: https://img.shields.io/pypi/v/mocr.svg
     :target: https://pypi.org/pypi/mocr/
 
