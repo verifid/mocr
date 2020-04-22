@@ -1,6 +1,6 @@
-opencv-python
-opencv-contrib-python
-pillow
-pytesseract
-imutils
-numpy
+opencv-python >= 4.2.0
+opencv-contrib-python >= 4.2.0
+pillow >= 7.1.1
+pytesseract >= 0.3.4
+imutils >= 0.5.3
+numpy >= 1.18.3
