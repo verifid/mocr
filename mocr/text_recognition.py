@@ -8,7 +8,7 @@ import numpy as np
 import pytesseract
 
 from imutils.object_detection import non_max_suppression
-from typing import List
+from typing import List, Tuple
 
 
 class TextRecognizer(object):
@@ -50,7 +50,7 @@ class TextRecognizer(object):
         self.lang = lang
 
     
-    def load_image(self):
+    def load_image(self) -> Tuple[bytearray, int, int]:
         """Load the input image and grab the image dimensions.
         Returns:
           (original, original_height, original_width): Tuple of image, it's height and width.
@@ -69,7 +69,7 @@ class TextRecognizer(object):
     def resize_image(self,
                      image: bytes,
                      new_width: int,
-                     new_height: int):
+                     new_height: int) -> Tuple[bytearray, int, int, int, int]:
         """Resize the image and grab the new image dimensions.
         Sets the new width and height and then determine the ratio in change
         for both the width and height.
@@ -99,7 +99,7 @@ class TextRecognizer(object):
     
     def geometry_score(self,
                        east_path: str,
-                       resized_image: List[bytes]):
+                       resized_image: List[bytes]) -> Tuple[List, List]:
         """Creates scores and geometry to use in predictions.
         Args:
           east_path (str):
@@ -138,7 +138,7 @@ class TextRecognizer(object):
         return (scores, geometry)
 
     
-    def decode_predictions(self, scores: List, geometry: List):
+    def decode_predictions(self, scores: List, geometry: List) -> Tuple[List, List]:
         """Grab the number of rows and columns from the scores volume, then
         initialize our set of bounding box rectangles and corresponding
         confidence scores.
@@ -212,7 +212,7 @@ class TextRecognizer(object):
         return (rects, confidences)
 
 
-    def boxes(self, scores: List, geometry: List):
+    def boxes(self, scores: List, geometry: List) -> List:
         """Returns boxes after decoding predictions and then applying
         non-maxima suppression.
         Args:
@@ -238,7 +238,7 @@ class TextRecognizer(object):
                     boxes: List,
                     image: bytes,
                     ratio_height: float,
-                    ratio_width: float):
+                    ratio_width: float) -> List:
         """Returns the list of sorted boxes.
         Args:
           boxes (array):

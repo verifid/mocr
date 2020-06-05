@@ -5,14 +5,14 @@ import os
 import cv2
 
 
-def detect_face(image_path: str):
+def detect_face(image_path: str) -> bytearray:
     """Detect face from given image path.
-        Args:
-          image_path (str):
-            Path to input image on file system.
-        Returns:
-          image (bytes array):
-            Bytes array for detected face image.
+    Args:
+      image_path (str):
+        Path to input image on file system.
+    Returns:
+      image (bytes array):
+        Bytes array for detected face image.
     """
 
     if not os.path.isfile(image_path):
