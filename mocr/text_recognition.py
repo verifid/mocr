@@ -12,17 +12,18 @@ from typing import List, Tuple
 
 
 class TextRecognizer(object):
-    """TextRecognizer can be used as to detect meaningful optical characters from identity cards.
-    """
+    """TextRecognizer can be used as to detect meaningful optical characters from identity cards."""
 
-    def __init__(self,
-                 image_path: str,
-                 east_path: str,
-                 min_confidence: float = 0.5,
-                 width: int = 320,
-                 height: int = 320,
-                 padding: float = 0.0,
-                 lang: str = 'eng'):
+    def __init__(
+        self,
+        image_path: str,
+        east_path: str,
+        min_confidence: float = 0.5,
+        width: int = 320,
+        height: int = 320,
+        padding: float = 0.0,
+        lang: str = "eng",
+    ):
         """Returns a TextRecognizer instance.
         Args:
           image_path (str):
@@ -49,7 +50,6 @@ class TextRecognizer(object):
         self.padding = padding
         self.lang = lang
 
-    
     def load_image(self) -> Tuple[bytearray, int, int]:
         """Load the input image and grab the image dimensions.
         Returns:
@@ -57,19 +57,19 @@ class TextRecognizer(object):
         """
 
         if not os.path.isfile(self.image_path):
-	        print('mocr:text_recognition:load_image No image found on given image path!')
-	        return (None, 0, 0)
+            print(
+                "mocr:text_recognition:load_image No image found on given image path!"
+            )
+            return (None, 0, 0)
 
         image = cv2.imread(self.image_path)
         original = image.copy()
         (original_height, original_width) = image.shape[:2]
         return (original, original_height, original_width)
 
-    
-    def resize_image(self,
-                     image: bytes,
-                     new_width: int,
-                     new_height: int) -> Tuple[bytearray, int, int, int, int]:
+    def resize_image(
+        self, image: bytes, new_width: int, new_height: int
+    ) -> Tuple[bytearray, int, int, int, int]:
         """Resize the image and grab the new image dimensions.
         Sets the new width and height and then determine the ratio in change
         for both the width and height.
@@ -85,7 +85,7 @@ class TextRecognizer(object):
         """
 
         if image is None:
-            print('mocr:text_recognition:resize_image Given image is none!')
+            print("mocr:text_recognition:resize_image Given image is none!")
             return (None, 0, 0, 0, 0)
 
         original_height, original_width = image.shape[:2]
@@ -96,10 +96,9 @@ class TextRecognizer(object):
         (resized_height, resized_width) = resized_image.shape[:2]
         return (resized_image, ratio_height, ratio_width, resized_height, resized_width)
 
-    
-    def geometry_score(self,
-                       east_path: str,
-                       resized_image: List[bytes]) -> Tuple[List, List]:
+    def geometry_score(
+        self, east_path: str, resized_image: List[bytes]
+    ) -> Tuple[List, List]:
         """Creates scores and geometry to use in predictions.
         Args:
           east_path (str):
@@ -114,30 +113,35 @@ class TextRecognizer(object):
         """
 
         if not os.path.isfile(east_path):
-            print('mocr:text_recognition:geometry_score No east detector found on given path!')
+            print(
+                "mocr:text_recognition:geometry_score No east detector found on given path!"
+            )
             return (None, None)
 
         if resized_image is None:
-            print('mocr:text_recognition:geometry_score Given resized_image is none!')
+            print("mocr:text_recognition:geometry_score Given resized_image is none!")
             return (None, None)
 
         (resized_height, resized_width) = resized_image.shape[:2]
-        layer_names = [
-          "feature_fusion/Conv_7/Sigmoid",
-          "feature_fusion/concat_3"]
+        layer_names = ["feature_fusion/Conv_7/Sigmoid", "feature_fusion/concat_3"]
 
         # load the pre-trained EAST text detector
         net = cv2.dnn.readNet(east_path)
 
         # construct a blob from the image and then perform a forward pass of
         # the model to obtain the two output layer sets
-        blob = cv2.dnn.blobFromImage(resized_image, 1.0, (resized_width, resized_height),
-          (123.68, 116.78, 103.94), swapRB=True, crop=False)
+        blob = cv2.dnn.blobFromImage(
+            resized_image,
+            1.0,
+            (resized_width, resized_height),
+            (123.68, 116.78, 103.94),
+            swapRB=True,
+            crop=False,
+        )
         net.setInput(blob)
         (scores, geometry) = net.forward(layer_names)
         return (scores, geometry)
 
-    
     def decode_predictions(self, scores: List, geometry: List) -> Tuple[List, List]:
         """Grab the number of rows and columns from the scores volume, then
         initialize our set of bounding box rectangles and corresponding
@@ -155,7 +159,9 @@ class TextRecognizer(object):
         """
 
         if scores is None or geometry is None:
-            print('mocr:text_recognition:decode_predictions Given scores or geometry is none!')
+            print(
+                "mocr:text_recognition:decode_predictions Given scores or geometry is none!"
+            )
             return (None, None)
 
         (num_rows, num_cols) = scores.shape[2:4]
@@ -211,7 +217,6 @@ class TextRecognizer(object):
         # return a tuple of the bounding boxes and associated confidences
         return (rects, confidences)
 
-
     def boxes(self, scores: List, geometry: List) -> List:
         """Returns boxes after decoding predictions and then applying
         non-maxima suppression.
@@ -226,19 +231,16 @@ class TextRecognizer(object):
         """
 
         if scores is None or geometry is None:
-            print('mocr:text_recognition:boxes Given scores or geometry is none!')
+            print("mocr:text_recognition:boxes Given scores or geometry is none!")
             return None
 
         (rects, confidences) = self.decode_predictions(scores, geometry)
         boxes = non_max_suppression(np.array(rects), probs=confidences)
         return boxes
 
-    
-    def get_results(self,
-                    boxes: List,
-                    image: bytes,
-                    ratio_height: float,
-                    ratio_width: float) -> List:
+    def get_results(
+        self, boxes: List, image: bytes, ratio_height: float, ratio_width: float
+    ) -> List:
         """Returns the list of sorted boxes.
         Args:
           boxes (array):
@@ -255,7 +257,7 @@ class TextRecognizer(object):
         """
 
         if boxes is None or image is None:
-            print('mocr:text_recognition:get_results Given boxes or image is none!')
+            print("mocr:text_recognition:get_results Given boxes or image is none!")
             return None
 
         (original_height, original_width) = image.shape[:2]
@@ -290,7 +292,7 @@ class TextRecognizer(object):
             # wish to use the LSTM neural net model for OCR, and finally
             # (3) an OEM value, in this case, 7 which implies that we are
             # treating the ROI as a single line of text
-            config = str.format('-l {0} --oem 1 --psm 7', self.lang)
+            config = str.format("-l {0} --oem 1 --psm 7", self.lang)
             text = pytesseract.image_to_string(roi, config=config)
 
             # add the bounding box coordinates and OCR'd text to the list
@@ -298,5 +300,5 @@ class TextRecognizer(object):
             results.append(((start_x, start_y, end_x, end_y), text))
 
         # sort the results bounding box coordinates from top to bottom
-        results = sorted(results, key=lambda r:r[0][1])
+        results = sorted(results, key=lambda r: r[0][1])
         return results
