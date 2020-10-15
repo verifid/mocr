@@ -57,7 +57,7 @@ class TextRecognizer(object):
         """
 
         if not os.path.isfile(self.image_path):
-	        print('text_recognition:load_image No image found on given image path!')
+	        print('mocr:text_recognition:load_image No image found on given image path!')
 	        return (None, 0, 0)
 
         image = cv2.imread(self.image_path)
@@ -85,7 +85,7 @@ class TextRecognizer(object):
         """
 
         if image is None:
-            print('text_recognition:resize_image Given image is none!')
+            print('mocr:text_recognition:resize_image Given image is none!')
             return (None, 0, 0, 0, 0)
 
         original_height, original_width = image.shape[:2]
@@ -114,11 +114,11 @@ class TextRecognizer(object):
         """
 
         if not os.path.isfile(east_path):
-            print('text_recognition:geometry_score No east detector found on given path!')
+            print('mocr:text_recognition:geometry_score No east detector found on given path!')
             return (None, None)
 
         if resized_image is None:
-            print('text_recognition:geometry_score Given resized_image is none!')
+            print('mocr:text_recognition:geometry_score Given resized_image is none!')
             return (None, None)
 
         (resized_height, resized_width) = resized_image.shape[:2]
@@ -155,7 +155,7 @@ class TextRecognizer(object):
         """
 
         if scores is None or geometry is None:
-            print('text_recognition:decode_predictions Given scores or geometry is none!')
+            print('mocr:text_recognition:decode_predictions Given scores or geometry is none!')
             return (None, None)
 
         (num_rows, num_cols) = scores.shape[2:4]
@@ -226,7 +226,7 @@ class TextRecognizer(object):
         """
 
         if scores is None or geometry is None:
-            print('text_recognition:boxes Given scores or geometry is none!')
+            print('mocr:text_recognition:boxes Given scores or geometry is none!')
             return None
 
         (rects, confidences) = self.decode_predictions(scores, geometry)
@@ -255,7 +255,7 @@ class TextRecognizer(object):
         """
 
         if boxes is None or image is None:
-            print('text_recognition:get_results Given boxes or image is none!')
+            print('mocr:text_recognition:get_results Given boxes or image is none!')
             return None
 
         (original_height, original_width) = image.shape[:2]

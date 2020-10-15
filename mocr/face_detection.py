@@ -16,7 +16,7 @@ def detect_face(image_path: str) -> bytearray:
     """
 
     if not os.path.isfile(image_path):
-        print('face_detection:detect_face No image found on given image path!')
+        print('mocr:face_detection:detect_face No image found on given image path!')
         return None
 
     # Create the haar cascade
@@ -34,7 +34,7 @@ def detect_face(image_path: str) -> bytearray:
         flags = cv2.CASCADE_SCALE_IMAGE
     )
     if len(faces) == 0 or len(faces) > 1:
-        print('Identity cards should have a profile picture!')
+        print('mocr:face_detection:detect_face Identity cards should have a profile picture!')
         return None
     (x, y, w, h) = faces[0]
     cropped_face_image = image[y:y+h, x:x+w]
