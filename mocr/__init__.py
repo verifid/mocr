@@ -12,9 +12,7 @@ __license__ = "MIT License"
 __version__ = "0.3.0"
 __url__ = "https://github.com/verifid/mocr"
 __download_url__ = "https://pypi.org/project/mocr/"
-__description__ = (
-    "Meaningful Optical Character Recognition from identity cards with Deep Learning."
-)
+__description__ = "Meaningful Optical Character Recognition from identity cards with Deep Learning."
 
 from .text_recognition import TextRecognizer
 from mocr import face_detection
