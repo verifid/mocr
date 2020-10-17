@@ -103,6 +103,14 @@ Sample Usage
     face_image = face_detection.detect_face(image_path)
     # face_image is the byte array detected and cropped image from original image
 
+.. code:: python
+
+    from mocr import face_detection
+
+    video_path = 'YOUR_IDENTITY_VIDEO_PATH'
+    face_image = face_detection.detect_face_from_video(video_path)
+    # face_image is the byte array detected and cropped image from original video
+
 CLI
 ===
 
