@@ -31,6 +31,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--image-face", type=str, help="Path to input image on file system."
     )
+    parser.add_argument(
+        "--video-face", type=str, help="Path to input video on file system."
+    )
     args = parser.parse_args()
 
     # Optional bash tab completion support
@@ -51,6 +54,18 @@ if __name__ == "__main__":
         face = face_detection.detect_face(image_path)
         cv2.imshow("Found profile", face)
         cv2.imwrite("screenshots/profile_" + file_name, face)
+    elif sys.argv[1] == "--video-face":
+        if len(sys.argv) < 3:
+            print("Specify an video path")
+            sys.exit(1)
+
+        video_path = sys.argv[2]
+        base = os.path.basename(video_path)
+        file_name = os.path.splitext(base)[0]
+        face = face_detection.detect_face_from_video(video_path)
+        cv2.imshow("Found profile", face)
+        print(file_name)
+        cv2.imwrite("screenshots/profile_" + file_name + ".png", face)
     else:
         if len(sys.argv) < 4:
             print("Specify an image path and east path")
