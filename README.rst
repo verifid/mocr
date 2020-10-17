@@ -122,11 +122,17 @@ Sample command line usage
 
     python -m mocr --image tests/data/sample_uk_identity_card.png --east tests/model/frozen_east_text_detection.pb
 
-* Face detection
+* Face detection from image file
 
 .. code::
 
     python -m mocr --image-face 'tests/data/sample_de_identity_card.jpg'
+
+* Face detection from video file
+
+.. code::
+
+    python -m mocr --video-face 'tests/data/face-demographics-walking.mp4'
 
 Screenshots
 -----------
